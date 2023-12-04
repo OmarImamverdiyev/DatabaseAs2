@@ -2,6 +2,7 @@ package postgre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +75,16 @@ public class UpdateBooks {
                         break;
                 }
             }
+            
+         // Check if author_id exists in the Authors table
+            if (attributeValues.containsKey("author_id")) {
+                int authorId = Integer.parseInt(attributeValues.get("author_id"));
+                if (!isAuthorIdPresent(conn, authorId)) {
+                    System.out.println("Cannot Update! Your Author_id is not present in Authors table");
+                    return;
+                }
+            }
+            
             pstmt.setInt(parameterIndex, bookId);
 
             int affectedRows = pstmt.executeUpdate();
@@ -86,4 +97,18 @@ public class UpdateBooks {
             System.out.println(ex.getMessage());
         }
     }
+    
+    private boolean isAuthorIdPresent(Connection conn, int authorId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM authors WHERE author_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, authorId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        }
+        return false;
+    }
+
 }
