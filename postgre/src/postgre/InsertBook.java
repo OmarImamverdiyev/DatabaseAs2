@@ -42,7 +42,7 @@ public class InsertBook {
 
                 if (!authorResult.next()) {
                     System.out.println("Author ID does not exist in Authors table.");
-                    System.out.println("Do you want to change the author ID? (1. Yes, 2. No)");
+                    System.out.println("Do you want to change the authors table? (1. Yes, 2. No)");
                     int option = Integer.parseInt(scanner.nextLine().trim());
 
                     if (option == 1) {

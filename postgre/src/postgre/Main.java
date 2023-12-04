@@ -430,7 +430,7 @@ return;
                 }
             }
 
-            scanner.close();
+            //scanner.close();
         }
 
 }
