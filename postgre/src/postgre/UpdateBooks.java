@@ -58,13 +58,27 @@ public class UpdateBooks {
 
             int parameterIndex = 1;
             for (String attribute : attributeValues.keySet()) {
-                pstmt.setString(parameterIndex++, attributeValues.get(attribute));
+                String value = attributeValues.get(attribute);
+                // Check the type of the attribute and set it accordingly
+                switch (attribute) {
+                    case "author_id":
+                    case "stock_quantity":
+                        pstmt.setInt(parameterIndex++, Integer.parseInt(value));
+                        break;
+                    case "price":
+                        pstmt.setDouble(parameterIndex++, Double.parseDouble(value));
+                        break;
+                    // Handle other cases for different data types if need
+                    default:
+                        pstmt.setString(parameterIndex++, value);
+                        break;
+                }
             }
             pstmt.setInt(parameterIndex, bookId);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Book details updated successfully.");
+                System.out.println("Book details updated successful.");
             } else {
                 System.out.println("No book found with the given book_id or no update performed.");
             }
