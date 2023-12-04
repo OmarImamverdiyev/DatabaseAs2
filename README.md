@@ -11,3 +11,7 @@ For runnign application
  What do you want to do with the database?
 (GetTableInfo, Insert, Delete, Update, MakeTransaction, ViewMetaData, Exit)
 Write Exit and program stops
+
+Note that: for program to run JDBC Driver must be downloaded and putted in referenced library
+Download link for JDBC: https://jdbc.postgresql.org/download/
+Download latest one.
